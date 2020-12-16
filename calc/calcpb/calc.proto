@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package calc;
+option go_package="calc/calcpb";
+
+message Sum {
+	int32 first = 1;
+	int32 last = 2;
+}
+
+message SumRequest {
+	Sum sum = 1;
+}
+
+message SumResponse {
+	int32 result = 1;
+}
+
+message DecompRequest {
+	int32 number_to_decomp = 1;
+}
+
+message DecompResponse {
+	int32 result = 1;
+}
+
+message AverageRequest {
+	int32 next = 1;
+}
+
+message AverageResponse {
+	int32 result = 1;
+}
+
+message MaxRequest {
+	int32 next = 1;
+}
+
+message MaxResponse {
+	int32 result = 1;
+}
+
+message SquareRootRequest {
+	double number = 1;
+}
+
+message SquareRootResponse {
+	double result = 1;
+}
+
+service CalcService {
+	rpc Sum(SumRequest) returns (SumResponse) {};
+	rpc Decomp(DecompRequest) returns (stream DecompResponse) {};
+	rpc Average(stream AverageRequest) returns (AverageResponse) {};
+	rpc Max(stream MaxRequest) returns (stream MaxResponse) {};
+	// error handling
+	// this RPC will thro exception if there is negative number
+	// this error will be sent as of INVALID_ARGUMENT
+	rpc SquareRoot(SquareRootRequest) returns (SquareRootResponse) {};
+}
